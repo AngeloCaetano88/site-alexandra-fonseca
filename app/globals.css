@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+:root {
+  --color-navy: #0b1f3a;
+  --color-electric: #1565c0;
+  --color-fog: #f4f6f8;
+  --color-performance-green: #00c853;
+  /* WCAG AA-safe variant of performance-green for text/icons on white or fog
+     backgrounds — the bright green fails 4.5:1 there (only ~2:1), see
+     components using it for status badges/icons on light surfaces. */
+  --color-performance-green-dark: #00693a;
+}
+
+@theme inline {
+  /* Design system — Coach Desportivo Alexandra Fonseca */
+  --color-navy: var(--color-navy);
+  --color-electric: var(--color-electric);
+  --color-fog: var(--color-fog);
+  --color-performance-green: var(--color-performance-green);
+  --color-performance-green-dark: var(--color-performance-green-dark);
+
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-poppins);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

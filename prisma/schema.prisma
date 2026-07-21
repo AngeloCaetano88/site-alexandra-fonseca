@@ -1,0 +1,346 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  CLIENT
+  ADMIN
+}
+
+enum Locale {
+  PT
+  EN
+  ES
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+  PAUSED
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  STRIPE
+  PAYPAL
+  MBWAY
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum ArticleStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum ResourceType {
+  VIDEO
+  DOCUMENT
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  emailVerified DateTime?
+  passwordHash  String?
+  phone         String?
+  avatarUrl     String?
+  locale        Locale    @default(PT)
+  role          UserRole  @default(CLIENT)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  athleteProfile       AthleteProfile?
+  enrollments          Enrollment[]
+  bookings             Booking[]
+  comments             Comment[]
+  articles             Article[]             @relation("ArticleAuthor")
+  newsletterSubscriber NewsletterSubscriber?
+  accounts             Account[]
+  sessions             Session[]
+  passwordResetTokens  PasswordResetToken[]
+  sentMessages         Message[]             @relation("MessageSender")
+  receivedMessages     Message[]             @relation("MessageRecipient")
+
+  @@map("users")
+}
+
+model Message {
+  id          String    @id @default(cuid())
+  senderId    String
+  sender      User      @relation("MessageSender", fields: [senderId], references: [id], onDelete: Cascade)
+  recipientId String
+  recipient   User      @relation("MessageRecipient", fields: [recipientId], references: [id], onDelete: Cascade)
+  body        String
+  readAt      DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@map("messages")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@map("password_reset_tokens")
+}
+
+model AthleteProfile {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  weightKg  Float?
+  heightCm  Float?
+  goals     String?
+  sport     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  evaluations Evaluation[]
+
+  @@map("athlete_profiles")
+}
+
+model Program {
+  id            String   @id @default(cuid())
+  name          String
+  slug          String   @unique
+  description   String
+  durationWeeks Int
+  goals         String?
+  priceCents    Int
+  active        Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  enrollments Enrollment[]
+  resources   Resource[]
+
+  @@map("programs")
+}
+
+model Resource {
+  id        String       @id @default(cuid())
+  programId String
+  program   Program      @relation(fields: [programId], references: [id], onDelete: Cascade)
+  title     String
+  type      ResourceType
+  url       String
+  createdAt DateTime     @default(now())
+
+  @@map("resources")
+}
+
+model Enrollment {
+  id        String           @id @default(cuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  programId String
+  program   Program          @relation(fields: [programId], references: [id])
+  startDate DateTime
+  endDate   DateTime?
+  status    EnrollmentStatus @default(ACTIVE)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  workouts Workout[]
+  payments Payment[]
+
+  @@map("enrollments")
+}
+
+model Workout {
+  id           String     @id @default(cuid())
+  enrollmentId String
+  enrollment   Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+  date         DateTime
+  title        String
+  exercises    Json
+  notes        String?
+  completed    Boolean    @default(false)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@map("workouts")
+}
+
+model Evaluation {
+  id               String         @id @default(cuid())
+  athleteProfileId String
+  athleteProfile   AthleteProfile @relation(fields: [athleteProfileId], references: [id], onDelete: Cascade)
+  date             DateTime
+  strengthKg       Float?
+  speedSeconds     Float?
+  mobilityScore    Float?
+  notes            String?
+  createdAt        DateTime       @default(now())
+
+  @@map("evaluations")
+}
+
+model Booking {
+  id            String        @id @default(cuid())
+  userId        String?
+  user          User?         @relation(fields: [userId], references: [id])
+  name          String
+  email         String
+  phone         String?
+  service       String
+  date          DateTime
+  status        BookingStatus @default(PENDING)
+  googleEventId String?
+  notes         String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  payments Payment[]
+
+  @@map("bookings")
+}
+
+model Payment {
+  id           String        @id @default(cuid())
+  amountCents  Int
+  currency     String        @default("EUR")
+  method       PaymentMethod
+  status       PaymentStatus @default(PENDING)
+  enrollmentId String?
+  enrollment   Enrollment?   @relation(fields: [enrollmentId], references: [id])
+  bookingId    String?
+  booking      Booking?      @relation(fields: [bookingId], references: [id])
+  externalRef  String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@map("payments")
+}
+
+model Article {
+  id              String        @id @default(cuid())
+  title           String
+  slug            String        @unique
+  excerpt         String
+  body            String
+  category        String
+  imageUrl        String?
+  readTimeMinutes Int?
+  authorId        String
+  author          User          @relation("ArticleAuthor", fields: [authorId], references: [id])
+  status          ArticleStatus @default(DRAFT)
+  seoTitle        String?
+  seoDescription  String?
+  publishedAt     DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  comments Comment[]
+
+  @@map("articles")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  articleId String
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  body      String
+  createdAt DateTime @default(now())
+
+  @@map("comments")
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  name      String
+  sport     String
+  quote     String
+  rating    Int      @default(5)
+  photoUrl  String?
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@map("testimonials")
+}
+
+model Faq {
+  id       String @id @default(cuid())
+  question String
+  answer   String
+  order    Int    @default(0)
+
+  @@map("faqs")
+}
+
+model NewsletterSubscriber {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  userId       String?  @unique
+  user         User?    @relation(fields: [userId], references: [id])
+  subscribedAt DateTime @default(now())
+  mailchimpId  String?
+
+  @@map("newsletter_subscribers")
+}
