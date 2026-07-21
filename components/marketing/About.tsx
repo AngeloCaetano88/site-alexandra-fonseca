@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Reveal } from "./Reveal";
 import { SectionEyebrow } from "./SectionEyebrow";
 import { skills } from "./data";
@@ -9,18 +8,7 @@ export function About() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid md:grid-cols-2 gap-16 items-start">
           <Reveal>
-            <div className="flex items-center gap-5 mb-6">
-              <Image
-                src="/images/alexandra-fonseca.jpg"
-                alt="Alexandra Fonseca"
-                width={96}
-                height={96}
-                className="w-24 h-24 rounded-full object-cover border-2 border-performance-green shrink-0"
-              />
-              <div>
-                <SectionEyebrow>Sobre mim</SectionEyebrow>
-              </div>
-            </div>
+            <SectionEyebrow>Sobre mim</SectionEyebrow>
             <h2 className="font-display font-bold text-3xl md:text-4xl leading-tight mb-6">
               Mais de uma década a preparar corpos e mentes para competir.
             </h2>
