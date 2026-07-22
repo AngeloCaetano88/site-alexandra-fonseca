@@ -24,12 +24,6 @@ export function Hero() {
             Treino personalizado para atletas, equipas e pessoas que procuram
             excelência física e mental.
           </p>
-          <div className="mt-9 flex flex-wrap gap-4">
-            <GlassButton href="/calendario">Marcar Avaliação</GlassButton>
-            <GlassButton variant="outline" href="/#servicos">
-              Conhecer Serviços
-            </GlassButton>
-          </div>
         </Reveal>
         <Reveal delay={150}>
           <div className="relative aspect-4/5 rounded-2xl bg-gradient-to-br from-electric/30 to-performance-green/10 border border-white/10 flex items-center justify-center">
@@ -41,6 +35,12 @@ export function Hero() {
                 [ espaço para fotografia / vídeo de treino de alta performance ]
               </p>
             </div>
+          </div>
+          <div className="mt-6 flex flex-wrap gap-4">
+            <GlassButton href="/calendario">Marcar Avaliação</GlassButton>
+            <GlassButton variant="outline" href="/#servicos">
+              Conhecer Serviços
+            </GlassButton>
           </div>
         </Reveal>
       </div>
