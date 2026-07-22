@@ -21,22 +21,24 @@ export default async function AdminProtectedLayout({
   return (
     <div className="min-h-screen flex flex-col bg-fog">
       <header className="bg-navy">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/admin" className="flex items-center gap-2.5">
-            <span className="font-display font-bold text-lg tracking-tight">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+          <Link href="/admin" className="flex items-center gap-2.5 min-w-0 shrink-0">
+            <span className="font-display font-bold text-lg tracking-tight shrink-0">
               <span className="text-performance-green">80</span>
               <span className="text-white/40">/</span>
               <span className="text-electric">20</span>
             </span>
-            <span className="text-white/70 text-sm font-medium pl-2.5 border-l border-white/20">
+            <span className="hidden sm:inline text-white/70 text-sm font-medium pl-2.5 border-l border-white/20">
               Painel Administrativo
             </span>
           </Link>
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-[#c9d6ea]">{session.user.name}</span>
+          <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+            <span className="text-sm text-[#c9d6ea] truncate max-w-[6rem] sm:max-w-none">
+              {session.user.name}
+            </span>
             <SignOutButton
               redirectTo="/admin/login"
-              className="text-sm font-semibold text-white/70 hover:text-white transition-colors"
+              className="text-sm font-semibold text-white/70 hover:text-white transition-colors shrink-0"
             />
           </div>
         </div>
