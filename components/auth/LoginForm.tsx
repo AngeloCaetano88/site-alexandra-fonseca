@@ -63,6 +63,10 @@ export function LoginForm({
             name="email"
             type="email"
             required
+            autoCapitalize="none"
+            autoCorrect="off"
+            autoComplete="email"
+            spellCheck={false}
             className="w-full rounded-xl border border-black/10 bg-white px-4 py-3 text-sm text-navy placeholder:text-[#8493ab] focus:outline-none focus:ring-2 focus:ring-electric"
             placeholder="tu@email.com"
           />
@@ -87,6 +91,10 @@ export function LoginForm({
             type="password"
             required
             minLength={8}
+            autoCapitalize="none"
+            autoCorrect="off"
+            autoComplete="current-password"
+            spellCheck={false}
             className="w-full rounded-xl border border-black/10 bg-white px-4 py-3 text-sm text-navy placeholder:text-[#8493ab] focus:outline-none focus:ring-2 focus:ring-electric"
             placeholder="••••••••"
           />
