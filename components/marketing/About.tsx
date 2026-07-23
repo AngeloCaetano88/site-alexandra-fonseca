@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Reveal } from "./Reveal";
 import { SectionEyebrow } from "./SectionEyebrow";
 
@@ -10,15 +11,15 @@ export function About() {
           <h2 className="font-display font-bold text-3xl md:text-4xl leading-tight mb-6">
             Mais de uma década a preparar corpos e mentes para competir.
           </h2>
-          <div className="relative aspect-4/5 rounded-2xl bg-gradient-to-br from-electric/30 to-performance-green/10 border border-black/10 flex items-center justify-center">
-            <div className="text-center px-8">
-              <div className="mx-auto w-16 h-16 rounded-full border-2 border-performance-green flex items-center justify-center mb-4">
-                <div className="w-3 h-3 rounded-full bg-performance-green" />
-              </div>
-              <p className="text-[#5c6b84] text-sm">
-                [ espaço para fotografia / vídeo de treino de alta performance ]
-              </p>
-            </div>
+          <div className="relative aspect-4/5 rounded-2xl overflow-hidden border border-black/10">
+            <Image
+              src="/images/alexandra-fonseca.jpg"
+              alt="Alexandra Fonseca"
+              fill
+              sizes="(min-width: 768px) 768px, 100vw"
+              className="object-cover"
+              priority
+            />
           </div>
         </Reveal>
       </div>
