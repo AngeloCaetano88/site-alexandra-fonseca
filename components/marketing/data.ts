@@ -103,13 +103,3 @@ export const results: Result[] = [
   { label: "Velocidade (30m)", before: "4.6s", after: "4.1s", pct: "-11%" },
   { label: "Impulsão vertical", before: "42cm", after: "56cm", pct: "+33%" },
 ];
-
-export const skills = [
-  "Preparação Física",
-  "Performance",
-  "Força",
-  "Recuperação",
-  "Nutrição Desportiva",
-  "Mental Coaching",
-  "Análise de Performance",
-];
