@@ -12,7 +12,7 @@ export function Hero() {
             "radial-gradient(circle at 80% 20%, rgba(21,101,192,0.5), transparent 55%), radial-gradient(circle at 10% 80%, rgba(0,200,83,0.25), transparent 45%)",
         }}
       />
-      <div className="relative max-w-7xl mx-auto px-6 pt-24 pb-32 grid md:grid-cols-2 gap-12 items-center">
+      <div className="relative max-w-3xl mx-auto px-6 pt-24 pb-32 text-center">
         <Reveal>
           <p className="text-xs font-semibold tracking-[0.3em] uppercase text-performance-green mb-5">
             Preparação física de alto rendimento
@@ -20,23 +20,11 @@ export function Hero() {
           <h1 className="font-display font-extrabold text-white text-4xl sm:text-5xl lg:text-[3.4rem] leading-[1.08] tracking-tight">
             Transforma o teu potencial em resultados.
           </h1>
-          <p className="mt-6 text-lg text-[#c9d6ea] max-w-md leading-relaxed">
+          <p className="mt-6 text-lg text-[#c9d6ea] max-w-md mx-auto leading-relaxed">
             Treino personalizado para atletas, equipas e pessoas que procuram
             excelência física e mental.
           </p>
-        </Reveal>
-        <Reveal delay={150}>
-          <div className="relative aspect-4/5 rounded-2xl bg-gradient-to-br from-electric/30 to-performance-green/10 border border-white/10 flex items-center justify-center">
-            <div className="text-center px-8">
-              <div className="mx-auto w-16 h-16 rounded-full border-2 border-performance-green flex items-center justify-center mb-4">
-                <div className="w-3 h-3 rounded-full bg-performance-green" />
-              </div>
-              <p className="text-[#9fb3d1] text-sm">
-                [ espaço para fotografia / vídeo de treino de alta performance ]
-              </p>
-            </div>
-          </div>
-          <div className="mt-6 flex flex-wrap gap-4">
+          <div className="mt-9 flex flex-wrap justify-center gap-4">
             <GlassButton href="/calendario">Marcar Avaliação</GlassButton>
             <GlassButton variant="outline" href="/#servicos">
               Conhecer Serviços

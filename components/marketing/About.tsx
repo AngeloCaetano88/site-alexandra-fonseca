@@ -12,16 +12,16 @@ export function About() {
             <h2 className="font-display font-bold text-3xl md:text-4xl leading-tight mb-6">
               Mais de uma década a preparar corpos e mentes para competir.
             </h2>
-            <p className="text-[#3d4b63] leading-relaxed mb-4">
-              Trabalho com atletas individuais e equipas na construção de
-              planos de treino baseados em dados, não em suposições. A missão
-              é simples: cada sessão aproxima-te do teu melhor desempenho, de
-              forma segura e sustentável.
-            </p>
-            <p className="text-[#3d4b63] leading-relaxed">
-              Valorizo o rigor técnico, a comunicação próxima e a evolução
-              mensurável — três pilares que se refletem em cada programa.
-            </p>
+            <div className="relative aspect-4/5 rounded-2xl bg-gradient-to-br from-electric/30 to-performance-green/10 border border-black/10 flex items-center justify-center">
+              <div className="text-center px-8">
+                <div className="mx-auto w-16 h-16 rounded-full border-2 border-performance-green flex items-center justify-center mb-4">
+                  <div className="w-3 h-3 rounded-full bg-performance-green" />
+                </div>
+                <p className="text-[#5c6b84] text-sm">
+                  [ espaço para fotografia / vídeo de treino de alta performance ]
+                </p>
+              </div>
+            </div>
           </Reveal>
           <Reveal delay={150}>
             <div className="grid grid-cols-2 gap-4">
